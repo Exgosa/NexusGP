@@ -10,7 +10,7 @@ Descripción:
 - Página single-file con secciones: Inicio, Servicios, Contacto.
 - Idioma por defecto: Español. Botón "EN/ES" para alternar entre Español e Inglés dinámicamente.
 - Estilo: elegante, minimalista, animaciones suaves.
-- Reemplaza los enlaces (WhatsApp, Instagram, LinkedIn) por los tuyos.
+- ENLACES ACTUALIZADOS: WhatsApp, Instagram, Facebook, Gmail.
 -->
 
 <!doctype html>
@@ -168,9 +168,11 @@ Descripción:
           <p class="muted" data-i18n="contacto_sub">Agenda una reunión o escríbenos directamente por WhatsApp o nuestras redes.</p>
 
           <div style="margin-top:18px;display:flex;flex-direction:column;gap:12px">
-            <a class="chip" href="https://wa.me/573001234567" target="_blank">WhatsApp — Agenda tu reunión</a>
-            <a class="chip" href="#" target="_blank">Instagram</a>
-            <a class="chip" href="#" target="_blank">LinkedIn</a>
+            <!-- CONTACTOS ACTUALIZADOS CON DATA-I18N -->
+            <a class="chip" href="https://wa.me/573173837810" target="_blank" data-i18n="chip_whatsapp">WhatsApp — Agenda tu reunión</a>
+            <a class="chip" href="https://www.instagram.com/nexus_gp_ig/" target="_blank" data-i18n="chip_instagram">Instagram</a>
+            <a class="chip" href="https://www.facebook.com/profile.php?id=61577031748975" target="_blank" data-i18n="chip_facebook">Facebook</a>
+            <a class="chip" href="mailto:mailnexusgp@gmail.com" target="_blank" data-i18n="chip_gmail">Gmail — mailnexusgp@gmail.com</a>
           </div>
 
           <p style="margin-top:18px" class="small muted" data-i18n="horario">Horario de atención: Lun–Vie 8:00–17:00 (hora Colombia)</p>
@@ -200,8 +202,9 @@ Descripción:
         </div>
         <div style="display:flex;align-items:center;gap:12px">
           <div class="socials">
-            <a class="chip" href="#">Instagram</a>
-            <a class="chip" href="#">LinkedIn</a>
+            <!-- Redes del footer: Instagram y Facebook con data-i18n -->
+            <a class="chip" href="https://www.instagram.com/nexus_gp_ig/" target="_blank" data-i18n="chip_instagram">Instagram</a>
+            <a class="chip" href="https://www.facebook.com/profile.php?id=61577031748975" target="_blank" data-i18n="chip_facebook">Facebook</a>
           </div>
           <div class="muted small">© <span id="year"></span> Nexus GP</div>
         </div>
@@ -222,7 +225,12 @@ Descripción:
         s2_t:'Logística & Aduanas',s2_d:'Coordinamos transporte internacional, documentación aduanera y opciones de envío optimizadas.',
         s3_t:'Viajes de negocios organizados',s3_d:'Viajes corporativos a China y Europa con itinerarios diseñados para negociación y sourcing.',
         contacto_t:'Contacto',contacto_sub:'Agenda una reunión o escríbenos directamente por WhatsApp o nuestras redes.',horario:'Horario de atención: Lun–Vie 8:00–17:00 (hora Colombia)',
-        enviar:'Enviar'
+        enviar:'Enviar',
+        /* NUEVOS: chips de contacto y footer */
+        chip_whatsapp:'WhatsApp — Agenda tu reunión',
+        chip_instagram:'Instagram',
+        chip_facebook:'Facebook',
+        chip_gmail:'Gmail — mailnexusgp@gmail.com'
       },
       en:{
         nav_inicio:'Home',nav_servicios:'Services',nav_contacto:'Contact',
@@ -234,45 +242,66 @@ Descripción:
         s2_t:'Logistics & Customs',s2_d:'We coordinate international transport, customs documentation and optimized shipping options.',
         s3_t:'Organized business travel',s3_d:'Corporate trips to China and Europe with itineraries designed for negotiation and sourcing.',
         contacto_t:'Contact',contacto_sub:'Schedule a meeting or write to us directly via WhatsApp or our socials.',horario:'Opening hours: Mon–Fri 8:00–17:00 (Colombia time)',
-        enviar:'Send'
+        enviar:'Send',
+        /* NUEVOS: chips de contacto y footer */
+        chip_whatsapp:'WhatsApp — Schedule your meeting',
+        chip_instagram:'Instagram',
+        chip_facebook:'Facebook',
+        chip_gmail:'Email — mailnexusgp@gmail.com'
       }
-    }
+    };
 
     let currentLang = 'es';
+
     const setText = (lang)=>{
       document.querySelectorAll('[data-i18n]').forEach(el=>{
         const key = el.getAttribute('data-i18n');
         if(translations[lang][key]) el.innerText = translations[lang][key];
       });
-    }
+      // Actualiza el atributo lang del <html> por accesibilidad/SEO
+      document.documentElement.setAttribute('lang', lang);
+    };
+
     document.getElementById('langToggle').addEventListener('click',()=>{
       currentLang = currentLang === 'es' ? 'en' : 'es';
       document.getElementById('langToggle').innerText = currentLang === 'es' ? 'EN' : 'ES';
       setText(currentLang);
     });
+
     // inicial
     setText(currentLang);
 
     // Años dinámicos
     document.getElementById('year').innerText = new Date().getFullYear();
 
-    // Simulación de "enviar" (puedes integrar un backend o un mailto/wa link)
+    // Simulación de "enviar" — abre WhatsApp con mensaje prellenado (número actualizado)
     document.getElementById('contactSend').addEventListener('click',()=>{
       const name = document.getElementById('contactName').value.trim();
       const contact = document.getElementById('contactEmail').value.trim();
       const msg = document.getElementById('contactMsg').value.trim();
       const status = document.getElementById('contactStatus');
-      if(!name || !contact || !msg){ status.innerText = currentLang === 'es' ? 'Por favor completa todos los campos.' : 'Please fill all fields.'; return; }
-      // ejemplo: abrimos WhatsApp con el mensaje prellenado
-      const wa = 'https://wa.me/573001234567?text=' + encodeURIComponent((currentLang==='es'? 'Hola Nexus GP, quiero agendar una reunión.\n':'Hi Nexus GP, I want to schedule a meeting.\n') + '\nNombre: '+name+'\nContacto: '+contact+'\nMensaje: '+msg);
+      if(!name || !contact || !msg){
+        status.innerText = currentLang === 'es' ? 'Por favor completa todos los campos.' : 'Please fill all fields.';
+        return;
+      }
+      const wa = 'https://wa.me/573173837810?text=' + encodeURIComponent(
+        (currentLang==='es'
+          ? 'Hola Nexus GP, quiero agendar una reunión.\n'
+          : 'Hi Nexus GP, I want to schedule a meeting.\n') +
+        '\nNombre: '+name+'\nContacto: '+contact+'\nMensaje: '+msg
+      );
       window.open(wa,'_blank');
       status.innerText = currentLang === 'es' ? 'Se está abriendo WhatsApp...' : 'Opening WhatsApp...';
     });
+
     document.getElementById('contactClear').addEventListener('click',()=>{
-      document.getElementById('contactName').value='';document.getElementById('contactEmail').value='';document.getElementById('contactMsg').value='';document.getElementById('contactStatus').innerText='';
+      document.getElementById('contactName').value='';
+      document.getElementById('contactEmail').value='';
+      document.getElementById('contactMsg').value='';
+      document.getElementById('contactStatus').innerText='';
     });
 
-    // Smooth scroll for internal links
+    // Smooth scroll para links internos
     document.querySelectorAll('a[href^="#"]').forEach(a=>{
       a.addEventListener('click',e=>{
         e.preventDefault();

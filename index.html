@@ -258,7 +258,7 @@ Descripción:
         const key = el.getAttribute('data-i18n');
         if(translations[lang][key]) el.innerText = translations[lang][key];
       });
-      // Actualiza el atributo lang del <html> por accesibilidad/SEO
+      // Accesibilidad/SEO
       document.documentElement.setAttribute('lang', lang);
     };
 
@@ -274,22 +274,27 @@ Descripción:
     // Años dinámicos
     document.getElementById('year').innerText = new Date().getFullYear();
 
-    // Simulación de "enviar" — abre WhatsApp con mensaje prellenado (número actualizado)
+    // Envío: abre WhatsApp con mensaje prellenado (NÚMERO TUYO)
     document.getElementById('contactSend').addEventListener('click',()=>{
       const name = document.getElementById('contactName').value.trim();
       const contact = document.getElementById('contactEmail').value.trim();
       const msg = document.getElementById('contactMsg').value.trim();
       const status = document.getElementById('contactStatus');
+
       if(!name || !contact || !msg){
         status.innerText = currentLang === 'es' ? 'Por favor completa todos los campos.' : 'Please fill all fields.';
         return;
       }
+
       const wa = 'https://wa.me/573173837810?text=' + encodeURIComponent(
         (currentLang==='es'
           ? 'Hola Nexus GP, quiero agendar una reunión.\n'
           : 'Hi Nexus GP, I want to schedule a meeting.\n') +
-        '\nNombre: '+name+'\nContacto: '+contact+'\nMensaje: '+msg
+        '\nNombre: ' + name +
+        '\nContacto: ' + contact +
+        '\nMensaje: ' + msg
       );
+
       window.open(wa,'_blank');
       status.innerText = currentLang === 'es' ? 'Se está abriendo WhatsApp...' : 'Opening WhatsApp...';
     });
